@@ -1,5 +1,17 @@
 import React from 'react';
 
+const COORDINATE_MAP = Object.freeze({
+  0: [0,0],
+  1: [0,1],
+  2: [0,2],
+  3: [0,1],
+  4: [1,1],
+  5: [2,1],
+  6: [0,2],
+  7: [1,2],
+  8: [2,2],
+});
+
 // this is an example of a controlled function component - one that only
 // contains the return of a render method and has no state of its own
 function Square(props) {
@@ -18,7 +30,9 @@ class Board extends React.Component {
     return (
       <Square
         value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
+        onClick={() => {
+          this.props.onClick({ i, coordinates: COORDINATE_MAP[i] })}
+        }
       />
     );
   }

@@ -12,10 +12,11 @@ class Game extends React.Component {
       }],
       stepNumber: 0, // represents the current step in the history
       xIsNext: true,
+      moveCoordinates: [],
     };
   }
 
-  handleClick(i) {
+  handleClick({ i, coordinates }) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -30,6 +31,7 @@ class Game extends React.Component {
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      moveCoordinates: this.state.moveCoordinates.concat([coordinates]),
     });
   }
 
@@ -47,7 +49,7 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move #' + move :
+        'Go to move #' + move + ' ' + this.state.moveCoordinates[move - 1]:
         'Go to game start';
       return (
         <li key={move}>
