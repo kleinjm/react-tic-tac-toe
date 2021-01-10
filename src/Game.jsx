@@ -13,6 +13,7 @@ class Game extends React.Component {
       stepNumber: 0, // represents the current step in the history
       xIsNext: true,
       moveCoordinates: [],
+      ascendingMoves: true,
     };
   }
 
@@ -42,6 +43,10 @@ class Game extends React.Component {
     });
   }
 
+  handleSortToggle() {
+    this.setState({ ascendingMoves: !this.state.ascendingMoves });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -63,6 +68,7 @@ class Game extends React.Component {
         </li>
       );
     });
+    if(!this.state.ascendingMoves) moves.reverse();
 
     let status;
 
@@ -82,7 +88,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <button onClick={() => this.handleSortToggle()}>
+            Sort Moves
+          </button>
+          <ul>{moves}</ul>
         </div>
       </div>
     );
