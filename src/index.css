@@ -34,7 +34,10 @@ ol, ul {
   padding: 0;
   text-align: center;
   width: 34px;
+}
 
+.square.highlight {
+  background: red;
 }
 
 .square:focus {
@@ -44,16 +47,13 @@ ol, ul {
 
 .kbd-navigation .square:focus {
   background: #ddd;
-
 }
 
 .game {
   display: flex;
   flex-direction: row;
-
 }
 
 .game-info {
   margin-left: 20px;
-
 }

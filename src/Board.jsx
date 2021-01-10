@@ -1,4 +1,5 @@
 import React from 'react';
+import _includes from 'lodash/includes';
 
 const COORDINATE_MAP = Object.freeze({
   0: [0,0],
@@ -20,7 +21,7 @@ const COLS = 3;
 function Square(props) {
   return (
     <button
-      className="square"
+      className={"square " + (props.highlight ? "highlight" : "")}
       onClick={props.onClick}
     >
       {props.value}
@@ -29,11 +30,12 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare(i, highlight) {
     return (
       <Square
         key={i}
         value={this.props.squares[i]}
+        highlight={highlight}
         onClick={() => {
           this.props.onClick({ i, coordinates: COORDINATE_MAP[i] })}
         }
@@ -48,7 +50,8 @@ class Board extends React.Component {
     for (let i = 0; i < ROWS; i++) {
       const cols = [];
       for (let j = 0; j < COLS; j++) {
-        cols.push(this.renderSquare(count));
+        const highlight = _includes(this.props.winningLine, count);
+        cols.push(this.renderSquare(count, highlight));
         count++;
       }
       rows.push(<div key={i} className="board-row">{cols}</div>)

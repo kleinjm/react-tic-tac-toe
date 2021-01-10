@@ -1,4 +1,5 @@
 import React from 'react';
+import _get from 'lodash/get';
 
 import Board from './Board.jsx';
 import calculateWinner from './calculateWinner';
@@ -21,7 +22,7 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    if (_get(calculateWinner(squares), 'winner', false) || squares[i]) {
       return;
     }
 
@@ -50,7 +51,7 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
+    const { winner, winningLine } = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       let desc = move ?
@@ -83,6 +84,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
+            winningLine={winningLine}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
