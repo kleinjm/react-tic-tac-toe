@@ -2,8 +2,8 @@ import React from 'react';
 
 const COORDINATE_MAP = Object.freeze({
   0: [0,0],
-  1: [0,1],
-  2: [0,2],
+  1: [1,0],
+  2: [2,0],
   3: [0,1],
   4: [1,1],
   5: [2,1],
@@ -11,6 +11,9 @@ const COORDINATE_MAP = Object.freeze({
   7: [1,2],
   8: [2,2],
 });
+
+const ROWS = 3;
+const COLS = 3;
 
 // this is an example of a controlled function component - one that only
 // contains the return of a render method and has no state of its own
@@ -29,6 +32,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
+        key={i}
         value={this.props.squares[i]}
         onClick={() => {
           this.props.onClick({ i, coordinates: COORDINATE_MAP[i] })}
@@ -37,25 +41,24 @@ class Board extends React.Component {
     );
   }
 
+  createBoard() {
+    const rows = [];
+    let count = 0;
+
+    for (let i = 0; i < ROWS; i++) {
+      const cols = [];
+      for (let j = 0; j < COLS; j++) {
+        cols.push(this.renderSquare(count));
+        count++;
+      }
+      rows.push(<div key={i} className="board-row">{cols}</div>)
+    }
+    return rows;
+  }
+
   render() {
     return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
+      <div>{this.createBoard()}</div>
     );
   }
 }
