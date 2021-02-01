@@ -3,6 +3,7 @@ import _get from 'lodash/get';
 
 import Board from './Board.jsx';
 import calculateWinner from './calculateWinner';
+import Holidays from './Holidays.jsx';
 
 class Game extends React.Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class Game extends React.Component {
           </button>
           <ul>{moves}</ul>
         </div>
+        <Holidays />
       </div>
     );
   }
